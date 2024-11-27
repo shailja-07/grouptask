@@ -3,15 +3,8 @@ from sklearn.model_selection import train_test_split
 from sklearn.linear_model import LinearRegression
 from sklearn.preprocessing import StandardScaler
 import joblib
-from sklearn.preprocessing import LabelEncoder
 
 data = pd.read_csv('data2.csv')  
-
-
-
-
-data = pd.read_csv('data2.csv')  
-
 
 X = data.drop('Productivity (%)',axis=1)  
 y = data['Productivity (%)']

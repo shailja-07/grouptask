@@ -4,6 +4,7 @@ import joblib
 import numpy as np
 import uvicorn
 
+
 model = joblib.load('model.pkl')
 scaler = joblib.load('scaler.pkl')
 
@@ -17,13 +18,14 @@ class Data(BaseModel):
     Salary: float
 
 @app.get("/")
-def read_root():
+@app.head("/")
+def root():
     return {"message": "Welcome!"}
+
 
 @app.get('/{name}')
 def get_name(name: str):
     return {'lets know your productivity': f'{name}'}
-
 
 @app.post("/predict")
 def predict(data: Data):
@@ -36,11 +38,13 @@ def predict(data: Data):
         data.Salary
     ]])
 
+ 
     scaled_data = scaler.transform(input_data)
 
     prediction = model.predict(scaled_data)
 
     return {"prediction": int(prediction[0])}
+
 
 if __name__ == '__main__':
     uvicorn.run(app, host='127.0.0.1', port=8000)
